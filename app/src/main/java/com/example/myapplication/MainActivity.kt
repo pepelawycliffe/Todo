@@ -4,15 +4,18 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.myapplication.Routes.todoViewModel
 
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        val todoViewModel = ViewModelProvider(this)[TodoViewModel::class.java]
         setContent {
             val navController = rememberNavController()
             NavHost(navController = navController, startDestination = Routes.WelcomeScreen, builder = {
@@ -20,9 +23,18 @@ class MainActivity : ComponentActivity() {
                     WelcomeScreen(navController)
                 }
                 composable(Routes.HomeScreen){
-                    HomeScreen(navController)
+//                    HomeScreen(navController)
+                    HomeScreen(navController = navController, viewModel = todoViewModel)
+
+
                 }
+//                composable(Routes.todoViewModel){
+//                    todoViewModel(navController)
+
+//                }
+//                TodoListPage(todoViewModel)
             })
+//            TodoListPage(todoViewModel)
 
         }
     }
